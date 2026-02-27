@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>DaBurguers | Artesanal & Premium</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            background-color: #121212; /* Fundo Preto */
+            color: #ffffff; 
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        h1, h2, .navbar-brand { 
+            font-family: 'Playfair Display', serif; /* Fonte Elegante */
+            color: #ff8c00; /* Laranja */
+        }
+
+        .navbar { 
+            background-color: #000000 !important; 
+            border-bottom: 2px solid #ff8c00;
+        }
+
+        .hero { 
+            padding: 80px 0; 
+            text-align: center; 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card { 
+            background-color: #1e1e1e; 
+            border: 1px solid #333; 
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .card:hover { transform: translateY(-10px); border-color: #ff8c00; }
+
+        .btn-warning { 
+            background-color: #ff8c00; 
+            border: none; 
+            font-weight: 600; 
+        }
+
+        .btn-warning:hover { background-color: #e67e00; }
+
+        .text-success { color: #ff8c00 !important; } /* Preço em Laranja */
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fs-2" href="#">DaBurguers 🍔</a>
+            <div>
+                <a href="/cadastro" class="btn btn-outline-light btn-sm me-2">Criar Conta</a>
+                <a href="/admin" class="btn btn-warning btn-sm">Entrar</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1 class="display-3">DaBurguers</h1>
+            <p class="lead">Onde o sabor encontra a elegância artesanal.</p>
+        </div>
+    </header>
+
+    <main class="container mt-5">
+        <h2 class="mb-4">Cardápio Exclusivo</h2>
+        <div class="row">
+            {% for burger in hamburgueres %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if burger.imagem %}
+                        <img src="{{ burger.imagem.url }}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{ burger.nome }}">
+                    {% endif %}
+                    <div class="card-body text-center">
+                        <h5 class="card-title fs-4">{{ burger.nome }}</h5>
+                        <p class="card-text text-secondary">{{ burger.descricao }}</p>
+                        <p class="fs-5 fw-bold text-success">R$ {{ burger.preco }}</p>
+                        <a href="#" class="btn btn-warning w-100">Adicionar ao Carrinho</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="text-center py-4 mt-5 border-top border-secondary">
+        <p class="text-secondary">&copy; 2026 DaBurguers - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

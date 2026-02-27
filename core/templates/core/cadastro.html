@@ -1,0 +1,55 @@
+<div class="container mt-5" style="color: white; background-color: #121212; padding: 30px; border-radius: 10px;">
+    <h2 style="font-family: 'Playfair Display', serif; color: #ff8c00;">Crie sua conta no DaBurguers</h2>
+    
+    <form method="post" class="mt-4">
+    {% csrf_token %}
+
+    {% if form.errors %}
+        <div class="alert alert-danger" style="background-color: #721c24; color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <strong>Ops! Verifique os campos abaixo:</strong>
+            <ul class="mb-0">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        ...
+            {% for field in form %}
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-warning w-100 mt-3" style="background-color: #ff8c00; border: none;">Finalizar Cadastro</button>
+    </form>
+
+</div>
+
+<script>
+    document.querySelector("#id_cep").addEventListener("blur", function() {
+        let cep = this.value.replace(/\D/g, '');
+        if (cep != "") {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        document.querySelector("#id_rua").value = data.logradouro;
+                        document.querySelector("#id_bairro").value = data.bairro;
+                        document.querySelector("#id_cidade").value = data.localidade;
+                        document.querySelector("#id_estado").value = data.uf;
+                        document.querySelector("#id_numero").focus();
+                    }
+                });
+        }
+    });
+</script>
+
+<style>
+    input { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #333; background: #1e1e1e; color: white; }
+</style>
